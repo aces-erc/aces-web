@@ -1,13 +1,13 @@
 "use client";
 
 import { UserButton, useUser } from "@clerk/nextjs";
-import { useEffect } from "react";
 
 const AdminPage = () => {
   const { isLoaded, isSignedIn, user } = useUser();
 
   return (
     <div>
+      {!isLoaded && <div>Loading...</div>}
       <UserButton />
       <div>
         This is the admin page.
