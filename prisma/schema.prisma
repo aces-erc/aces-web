@@ -11,11 +11,11 @@ model Blog {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   slug           String?  @unique
   title          String
-  body           String
+  body           String //md
   author         String?
   authorId       String
   authorImageUrl String?
-  postImageUrl   String?
+  coverImageUrl  String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
