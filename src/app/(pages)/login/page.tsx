@@ -27,14 +27,18 @@ const page = () => {
           </ClerkLoading>
           <ClerkLoaded>
             <SignedIn>
-              <Link href="/dashboard">
+              <Link href="/admin">
                 <Button className="inline-flex w-full justify-center rounded-md bg-gray-900 px-4 py-2 text-base font-medium text-white shadow-sm transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200 dark:focus:ring-gray-600 dark:focus:ring-offset-gray-900">
-                  Login
+                  Go to Dashboard
                 </Button>
               </Link>
             </SignedIn>
             <SignedOut>
-              <SignInButton mode="modal">
+              <SignInButton
+                fallbackRedirectUrl={"/admin"}
+                signUpFallbackRedirectUrl={"/admin"}
+                mode="modal"
+              >
                 <Button className="inline-flex w-full justify-center rounded-md bg-gray-900 px-4 py-2 text-base font-medium text-white shadow-sm transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200 dark:focus:ring-gray-600 dark:focus:ring-offset-gray-900">
                   Login
                 </Button>
