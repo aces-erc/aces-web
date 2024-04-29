@@ -1,13 +1,22 @@
 "use client";
 
 import logo from "@/assets/images/logo.png";
-import { BellIcon, HomeIcon, ShoppingCartIcon, Zap } from "lucide-react";
+import {
+  BellIcon,
+  CalendarPlus2,
+  HomeIcon,
+  Newspaper,
+  Rss,
+  UsersRound,
+  Zap,
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
 import { usePathname } from "next/navigation";
 
+// all the sidebar links are defined here
 const SIDEBAR_LINK = [
   {
     icon: HomeIcon,
@@ -15,9 +24,24 @@ const SIDEBAR_LINK = [
     href: "/admin",
   },
   {
-    icon: ShoppingCartIcon,
-    label: "Orders",
-    href: "#",
+    icon: Newspaper,
+    label: "News/Notices",
+    href: "/admin/news",
+  },
+  {
+    icon: CalendarPlus2,
+    label: "Events",
+    href: "/admin/events",
+  },
+  {
+    icon: Rss,
+    label: "Blogs",
+    href: "/admin/blogs",
+  },
+  {
+    icon: UsersRound,
+    label: "Committee",
+    href: "/admin/committee",
   },
 ];
 
@@ -55,7 +79,7 @@ const Sidebar = () => {
                 )}
                 href={link.href}
               >
-                <link.icon className="h-6 w-6" />
+                <link.icon className="h-5 w-5" />
                 {link.label}
               </Link>
             ))}
