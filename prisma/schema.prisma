@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Blog {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug           String?  @unique
+  title          String
+  body           String
+  author         String?
+  authorId       String
+  authorImageUrl String?
+  postImageUrl   String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Notices {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  title          String
+  body           String
+  author         String
+  date           String
+  NoticeImageUrl String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
