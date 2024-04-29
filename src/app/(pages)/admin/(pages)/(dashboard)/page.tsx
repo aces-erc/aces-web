@@ -1,10 +1,7 @@
-"use client";
-
 import { UserButton, useUser } from "@clerk/nextjs";
 
 const AdminPage = () => {
   const { isLoaded, isSignedIn, user } = useUser();
-
   return (
     <div>
       {!isLoaded && <div>Loading...</div>}
