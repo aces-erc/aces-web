@@ -9,14 +9,14 @@ const AdminPage = () => {
   return (
     <div>
       <UserButton />
-      <p>
+      <div>
         This is the admin page.
         <p className="text-red-500">
           {user?.publicMetadata.role === "admin"
             ? "You are an admin."
             : "You are not an admin."}
         </p>
-      </p>
+      </div>
     </div>
   );
 };
