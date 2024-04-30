@@ -12,7 +12,7 @@ import Link from "next/link";
 import { AlertTriangleIcon, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
-const page = () => {
+const Page = () => {
   const { user, isLoaded } = useUser();
 
   useEffect(() => {
@@ -77,10 +77,26 @@ const page = () => {
               immediately. Each and every action are being recorded.
             </p>
           </div>
+          <div className=" flex  justify-center items-center mx-auto w-full max-w-md space-y-6">
+            <p className="mt-2 text-gray-500 dark:text-gray-400">
+              Developed By:{" "}
+              <a className="text-purple-400" href="https://github.com/jrTilak">
+                jrTilak
+              </a>{" "}
+              and{" "}
+              <a
+                className="text-purple-400"
+                href="https://github.com/dev-sandip"
+              >
+                dev-sandip
+              </a>{" "}
+              with ❤️
+            </p>
+          </div>
         </div>
       </main>
     </div>
   );
 };
 
-export default page;
+export default Page;
