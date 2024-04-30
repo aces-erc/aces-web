@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
  */
 export const useInnerSize = () => {
   const [size, setSize] = useState({
-    height: window?.innerHeight || 1000,
-    width: window?.innerWidth || 1000, // i gave the max values so that it does not show not supported page for a instance when the window is not loaded
+    height:  1000,
+    width:  1000, // i gave the max values so that it does not show not supported page for a instance when the window is not loaded
   });
   useEffect(() => {
     window.addEventListener("resize", () => {
