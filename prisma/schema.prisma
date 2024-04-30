@@ -8,16 +8,33 @@ datasource db {
 }
 
 model Blog {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  slug           String?  @unique
-  title          String
-  body           String //md
-  author         String?
-  authorId       String
-  authorImageUrl String?
-  coverImageUrl  String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  slug            String      @unique
+  body            String
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  authorId        String
+  metaDescription String
+  thumbnail       Thumbnail   @relation(fields: [thumbnailId], references: [id])
+  thumbnailId     String      @unique @db.ObjectId
+  images          BlogImage[]
+}
+
+model Thumbnail {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  publicId Int?
+  url      String
+  Blog     Blog?
+  blogId   String? @unique @db.ObjectId
+}
+
+model BlogImage {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  publicId Int?
+  url      String
+  Blog     Blog?   @relation(fields: [blogId], references: [id])
+  blogId   String? @db.ObjectId
 }
 
 model Notices {

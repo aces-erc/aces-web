@@ -11,16 +11,25 @@
   "dependencies": {
     "@clerk/nextjs": "^5.0.3",
     "@prisma/client": "^5.13.0",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "@tanstack/react-query": "^5.32.0",
     "@uiw/react-md-editor": "^4.0.4",
+    "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.376.0",
     "next": "14.2.3",
+    "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.51.3",
+    "react-spinners": "^0.13.8",
+    "sonner": "^1.4.41",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.5"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
@@ -33,5 +42,11 @@
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
+  },
+  "lazykit": {
+    "language": "ts",
+    "path": "src/utils",
+    "separate": false,
+    "v": "1.0.0"
   }
 }

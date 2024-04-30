@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "ACES - Association of Computer Engineering Students",
@@ -29,6 +30,7 @@ export default function RootLayout({
           }}
         >
           {children}
+          <Toaster />
         </ClerkProvider>
       </body>
     </html>
