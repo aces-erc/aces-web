@@ -47,3 +47,21 @@ model Notices {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
+
+model CommitteeMembers {
+  id                       String                 @id @default(auto()) @map("_id") @db.ObjectId
+  name                     String
+  position                 String
+  contact                  String[]
+  CommitteeMembersAvatar   CommitteeMembersAvatar @relation(fields: [CommitteeMembersAvatarId], references: [id])
+  CommitteeMembersAvatarId String                 @unique @db.ObjectId
+}
+
+model CommitteeMembersAvatar {
+  id               String            @id @default(auto()) @map("_id") @db.ObjectId
+  publicId         String
+  url              String
+  CommitteeMembers CommitteeMembers?
+}
+
+// 
