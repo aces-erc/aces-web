@@ -4,6 +4,38 @@ import pick from "@/utils/pick";
 import { auth, currentUser, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
+export const GET = async () => {
+  try {
+    const blogs = await db.blog.findMany({
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        metaDescription: true,
+        thumbnail: true,
+      },
+    });
+    return NextResponse.json(
+      {
+        status: 200,
+        message: "Blogs fetched successfully",
+        data: blogs,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.log("🚀 ~ GET ~ error:", error);
+    return NextResponse.json(
+      {
+        status: 500,
+        message: "Something Went Wrong!",
+        error: JSON.stringify(error),
+      },
+      { status: 500 }
+    );
+  }
+};
+
 export async function POST(req: Request) {
   try {
     //check if the user is an admin
