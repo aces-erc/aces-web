@@ -14,7 +14,7 @@ export const newBlogSchema = z.object({
     url: z.string().url({
       message: "Invalid image URL",
     }),
-    publicId: z.number().optional(),
+    publicId: z.string().optional(),
   }),
   images: z
     .array(
@@ -22,7 +22,7 @@ export const newBlogSchema = z.object({
         url: z.string().url({
           message: "Invalid image URL",
         }),
-        publicId: z.number().optional(),
+        publicId: z.string().optional(),
       })
     )
     .optional(),

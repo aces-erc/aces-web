@@ -23,7 +23,7 @@ model Blog {
 
 model Thumbnail {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  publicId Int?
+  publicId String?
   url      String
   Blog     Blog?
   blogId   String? @unique @db.ObjectId
@@ -31,7 +31,7 @@ model Thumbnail {
 
 model BlogImage {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  publicId Int?
+  publicId String?
   url      String
   Blog     Blog?   @relation(fields: [blogId], references: [id])
   blogId   String? @db.ObjectId

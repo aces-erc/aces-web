@@ -41,13 +41,15 @@ export default function AdminLayout({
   // you are welcome
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+      <div className="grid h-screen w-full overflow-hidden md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
         <Sidebar />
         <div className="flex flex-col">
           <Header />
-          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-            {children}
-          </main>
+          <div className="h-[calc(100vh-80px)] overflow-y-scroll overflow-x-hidden scrollbar-md">
+            <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+              {children}
+            </main>
+          </div>
         </div>
       </div>
     </QueryClientProvider>

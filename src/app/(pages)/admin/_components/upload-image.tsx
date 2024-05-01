@@ -1,4 +1,5 @@
 // import Upload from "@/api/upload";
+import { uploadImage } from "@/api/images";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useMutation } from "@tanstack/react-query";
 // import { useMutation } from "@tanstack/react-query";
 import { CloudUpload } from "lucide-react";
 import React, { useState } from "react";
@@ -18,30 +20,30 @@ import { toast } from "sonner";
 type UploadImageProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  action: (data: { url: string; publicId?: number }) => void;
-  fileName: string;
+  action: (data: { url: string; publicId?: string }) => void;
 };
 const UploadImage = (props: UploadImageProps) => {
-  const [file, setFile] = useState<Blob | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [fileUrl, setFileUrl] = useState<string>("");
 
-  // const { mutate, isPending } = useMutation({
-  //   // @ts-ignore
-  //   mutationFn: () => {
-  //     return { hi: "there" };
-  //   },
-  //   onSuccess: (data) => {
-  //     // @ts-ignore
-  //     props.action(data);
-  //     props.setIsOpen(false);
-  //     toast.success("File uploaded successfully!");
-  //     setFile(null);
-  //     setFileUrl("");
-  //   },
-  //   onError: () => {
-  //     toast.error("Failed to upload file!");
-  //   },
-  // });
+  const { mutate, isPending } = useMutation({
+    mutationFn: uploadImage,
+    onSuccess: (data) => {
+      props.action(
+        data as {
+          url: string;
+          publicId?: string;
+        }
+      );
+      props.setIsOpen(false);
+      toast.success("Image uploaded successfully!");
+      setFile(null);
+      setFileUrl("");
+    },
+    onError: () => {
+      toast.error("Failed to upload image!");
+    },
+  });
 
   return (
     <Dialog open={props.isOpen}>
@@ -134,21 +136,22 @@ const UploadImage = (props: UploadImageProps) => {
             type="submit"
             onClick={() => {
               if (file) {
-                // mutate();
+                mutate(file);
               } else if (fileUrl) {
                 props.action({
                   url: fileUrl,
                   publicId: undefined,
                 });
                 props.setIsOpen(false);
+                setFile(null);
+                setFileUrl("");
               } else {
                 toast.error("Please select a file or provide a URL!");
               }
             }}
             className="min-w-20"
           >
-            {/* {isPending ? <PulseLoader color="#cdcfd1" size={6} /> : "Save"} */}
-            Save
+            {isPending ? <PulseLoader color="#cdcfd1" size={6} /> : "Save"}
           </Button>
         </DialogFooter>
       </DialogContent>
