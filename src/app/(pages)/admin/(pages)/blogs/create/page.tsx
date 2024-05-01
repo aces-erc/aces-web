@@ -1,22 +1,39 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StepOne from "./step-1";
 import { NewBlog } from "@/schema/blog.zod";
 import WriteBlog from "./write-blog";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { createBlog } from "@/api/blog";
 
 const CreateBlog = () => {
   const router = useRouter();
-  const [newBlog, setNewBlog] = useState<NewBlog>();
+  const queryClient = useQueryClient();
+  const [newBlog, setNewBlog] = useState<NewBlog>({
+    title: "",
+    metaDescription: "",
+    body: "*Your blog goes here.......*\n---",
+    thumbnail: { url: "" },
+  });
+
+  useEffect(() => {
+    console.log(newBlog);
+  }, [newBlog]);
+
   const [step, setStep] = useState(1);
   const { isPending, mutate } = useMutation({
     mutationFn: createBlog,
     onSuccess: () => {
-      toast.success("Blog created successfully");
-      router.push("/admin/blogs");
+      queryClient
+        .invalidateQueries({
+          queryKey: ["blogs"],
+        })
+        .then(() => {
+          toast.success("Blog created successfully");
+          router.push("/admin/blogs");
+        });
     },
     onError: () => {
       toast.error("Something went wrong");

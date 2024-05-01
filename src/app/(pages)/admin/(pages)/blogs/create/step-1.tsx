@@ -29,15 +29,13 @@ type Thumbnail = {
   publicId?: string;
 };
 
-const StepOne = ({
-  setStep,
-  setNewBlog,
-  newBlog,
-}: {
+type Props = {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   setNewBlog: React.Dispatch<React.SetStateAction<any>>;
   newBlog: NewBlog | undefined;
-}) => {
+};
+
+const StepOne = ({ setStep, setNewBlog, newBlog }: Props) => {
   const [isImageUploadModalOpen, setIsImageUploadModalOpen] = useState(false);
   const [thumbnail, setThumbnail] = useState<Thumbnail>();
   const {
@@ -50,10 +48,11 @@ const StepOne = ({
   } = useForm<Inputs>();
 
   const onSubmit = (data: Inputs) => {
-    setNewBlog({
+    setNewBlog((prev: any) => ({
+      ...prev,
       ...data,
       thumbnail,
-    });
+    }));
     setStep(2);
   };
 

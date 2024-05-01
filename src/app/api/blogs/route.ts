@@ -78,6 +78,14 @@ export async function POST(req: Request) {
             publicId: body.thumbnail.publicId, // assuming you have this field in the request body
           },
         },
+        images: body.images && {
+          create: {
+            data: body.images?.map((image: any) => ({
+              url: image.url,
+              publicId: image.publicId,
+            })),
+          },
+        },
       },
     });
     return NextResponse.json(

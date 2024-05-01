@@ -11,6 +11,15 @@ import { toast } from "sonner";
 import { PulseLoader } from "react-spinners";
 import { NewBlog } from "@/schema/blog.zod";
 
+type Props = {
+  onSubmit: Function;
+  isPending: boolean;
+  setStep: Function;
+  newBlog: NewBlog;
+  setVal: Function;
+  setImages: Function;
+};
+
 const WriteBlog = ({
   onSubmit,
   isPending,
@@ -18,14 +27,7 @@ const WriteBlog = ({
   newBlog: { body, images },
   setVal,
   setImages,
-}: {
-  onSubmit: Function;
-  isPending: boolean;
-  setStep: Function;
-  newBlog: NewBlog;
-  setVal: Function;
-  setImages: Function;
-}) => {
+}: Props) => {
   useEffect(() => {
     // this is a hack to style the toolbar of the markdown editor
     const addStyleToToolBar = () => {
@@ -101,7 +103,6 @@ const WriteBlog = ({
           <MDEditor
             className="!h-[70vh]"
             value={body}
-            defaultValue={"*Your blog goes here.......*\n---"}
             onChange={(val) => setVal(val!)}
           />
         </div>
