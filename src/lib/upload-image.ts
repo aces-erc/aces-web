@@ -8,7 +8,7 @@ export const UploadImage = async (file: File, folder: string) => {
     await cloudinary.uploader
       .upload_stream(
         {
-          resource_type: "auto",
+          resource_type: "image",
           folder: folder,
         },
         async (err, result) => {

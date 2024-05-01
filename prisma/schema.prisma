@@ -26,7 +26,6 @@ model Thumbnail {
   publicId String?
   url      String
   Blog     Blog?
-  blogId   String? @unique @db.ObjectId
 }
 
 model BlogImage {

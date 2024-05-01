@@ -4,12 +4,8 @@ export const newBlogSchema = z.object({
   title: z.string().min(5, {
     message: "Title must be at least 5 characters long",
   }),
-  body: z.string().min(10, {
-    message: "Body must be at least 10 characters long",
-  }),
-  metaDescription: z.string().min(10, {
-    message: "Body must be at least 10 characters long",
-  }),
+  body: z.string(),
+  metaDescription: z.string(),
   thumbnail: z.object({
     url: z.string().url({
       message: "Invalid image URL",

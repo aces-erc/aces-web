@@ -54,6 +54,7 @@ export async function POST(req: Request) {
     //see if the body is valid
     try {
       body = newBlogSchema.parse(body);
+      console.log("After Parsing " + body);
     } catch (error) {
       return NextResponse.json(
         {
@@ -64,8 +65,6 @@ export async function POST(req: Request) {
         { status: 422 }
       );
     }
-
-    console.log("🚀 ~ POST ~ body:", body);
 
     const newBlog = await db.blog.create({
       data: {
@@ -79,12 +78,10 @@ export async function POST(req: Request) {
           },
         },
         images: body.images && {
-          create: {
-            data: body.images?.map((image: any) => ({
-              url: image.url,
-              publicId: image.publicId,
-            })),
-          },
+          create: body.images?.map((image: any) => ({
+            url: image.url,
+            publicId: image.publicId,
+          })),
         },
       },
     });
