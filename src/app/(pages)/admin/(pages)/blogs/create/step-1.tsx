@@ -14,9 +14,9 @@ import FormErrorLine from "../../../_components/form-error-line";
 import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import UploadImage from "../../../_components/upload-file";
-import { useRouter } from "next/navigation";
+import UploadImage from "../../../_components/upload-image";
 import Link from "next/link";
+import { NewBlog } from "@/schema/blog.zod";
 
 type Inputs = {
   title: string;
@@ -26,32 +26,33 @@ type Inputs = {
 
 type Thumbnail = {
   url: string;
-  publicId?: number;
+  publicId?: string;
 };
 
-const StepOne = ({
-  setStep,
-  setNewBlog,
-}: {
+type Props = {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   setNewBlog: React.Dispatch<React.SetStateAction<any>>;
-}) => {
+  newBlog: NewBlog | undefined;
+};
+
+const StepOne = ({ setStep, setNewBlog, newBlog }: Props) => {
   const [isImageUploadModalOpen, setIsImageUploadModalOpen] = useState(false);
   const [thumbnail, setThumbnail] = useState<Thumbnail>();
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
     clearErrors,
+    reset,
     formState: { errors },
   } = useForm<Inputs>();
 
   const onSubmit = (data: Inputs) => {
-    setNewBlog({
+    setNewBlog((prev: any) => ({
+      ...prev,
       ...data,
       thumbnail,
-    });
+    }));
     setStep(2);
   };
 
@@ -60,18 +61,30 @@ const StepOne = ({
     clearErrors("thumbnail");
   }, [thumbnail]);
 
+  // Reset form when mounting to newBlog
+  useEffect(() => {
+    if (newBlog) {
+      reset({
+        title: newBlog.title,
+        metaDescription: newBlog.metaDescription,
+        thumbnail: newBlog.thumbnail.url,
+      });
+      setThumbnail(newBlog.thumbnail);
+    }
+  }, [newBlog]);
+
   return (
     <>
       <UploadImage
         isOpen={isImageUploadModalOpen}
-        fileName="thumbnail"
         setIsOpen={setIsImageUploadModalOpen}
         action={(data) => {
           setThumbnail(data);
         }}
+        folder="blogs/thumbnails"
       />
       <form onSubmit={handleSubmit(onSubmit)} className="m-auto w-[600px]">
-        <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8 shadow-lg">
+        <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8 shadow-md">
           <Card x-chunk="dashboard-07-chunk-0">
             <CardHeader>
               <CardTitle>Blog Details</CardTitle>

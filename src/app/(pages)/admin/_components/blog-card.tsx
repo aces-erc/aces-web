@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
-import Image from "next/image";
+import { Pencil, Trash, Trash2 } from "lucide-react";
+import Link from "next/link";
 
 export type BlogCardProps = {
   title: string;
@@ -13,24 +14,36 @@ export type BlogCardProps = {
 
 const BlogCard = (props: BlogCardProps) => {
   return (
-    <Card className="w-full max-w-md">
-      <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
+    <Card className="w-full relative group max-w-[370px]">
+      {/* // edit delete buttons */}
+      <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 scale-0 group-hover:scale-100 transition-transform">
+        <button className="bg-muted/40 p-1 rounded-full">
+          <Pencil className="w-4 h-4" />
+        </button>
+        <button className="bg-destructive/40 p-1 rounded-full">
+          <Trash2 className="w-4 h-4" />
+        </button>
+      </div>
+
+      <div className="aspect-[9/5] overflow-hidden rounded-t-lg">
         <img
           alt={props.title}
           className="h-full w-full object-cover object-center"
-          height={300}
           src={props.thumbnail.url}
-          style={{
-            aspectRatio: "400/300",
-            objectFit: "cover",
-            objectPosition: "center",
-          }}
-          width={400}
         />
       </div>
       <div className="p-4">
-        <h3 className="text-xl font-bold">{props.title}</h3>
-        <p className="mt-2 text-muted-foreground">{props.metaDescription}</p>
+        <Link
+          href={`/blogs/${props.slug}`}
+          className="text-lg font-bold hover:underline"
+        >
+          {props.title.substring(0, 40) +
+            (props.title.length > 40 ? "..." : "")}
+        </Link>
+        <p className="mt-1 text-muted-foreground">
+          {props.metaDescription.substring(0, 100)}
+          {props.metaDescription.length > 100 ? "..." : ""}
+        </p>
       </div>
     </Card>
   );

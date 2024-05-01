@@ -8,32 +8,59 @@ import { NextRequest, NextResponse } from "next/server";
  * @returns A NextResponse object with the JSON response containing the uploaded image data and a success message.
  */
 export const POST = async (req: NextRequest) => {
-  const formData = await req.formData();
-  const image = formData.get("image") as unknown as File;
+  try {
+    const formData = await req.formData();
+    const image = formData.get("image") as unknown as File;
+    const folder = formData.get("folder") as string;
 
-  const data: any = await UploadImage(image, "images");
+    const data: any = await UploadImage(image, folder ?? "images");
 
-  return NextResponse.json(
-    {
-      msg: { data, message: "Image uploaded successfully" },
-    },
-    {
-      status: 200,
-    }
-  );
+    return NextResponse.json(
+      {
+        data,
+        message: "Image uploaded successfully",
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        status: 500,
+        message: JSON.stringify(error),
+      },
+      {
+        status: 500,
+      }
+    );
+  }
 };
 
 export const DELETE = async (req: NextRequest) => {
-  const { public_id } = await req.json();
-  const result = await DeleteImage(public_id);
-  return NextResponse.json(
-    {
-      msg: { result, message: "Image deleted successfully" },
-    },
-    {
-      status: 200,
-    }
-  );
+  try {
+    const { publicId } = await req.json();
+    const result = await DeleteImage(publicId);
+    return NextResponse.json(
+      {
+        data: result,
+        message: "Image deleted successfully",
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        status: 500,
+        message: JSON.stringify(error),
+      },
+      {
+        status: 500,
+      }
+    );
+  }
 };
 
 // Note :

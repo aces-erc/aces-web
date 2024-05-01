@@ -1,7 +1,7 @@
 import { db } from "@/db/db";
 import { newBlogSchema } from "@/schema/blog.zod";
 import pick from "@/utils/pick";
-import { auth, currentUser, clerkClient } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
@@ -13,6 +13,9 @@ export const GET = async () => {
         slug: true,
         metaDescription: true,
         thumbnail: true,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
     return NextResponse.json(
@@ -65,8 +68,6 @@ export async function POST(req: Request) {
       );
     }
 
-    console.log("🚀 ~ POST ~ body:", body);
-
     const newBlog = await db.blog.create({
       data: {
         ...body,
@@ -77,6 +78,12 @@ export async function POST(req: Request) {
             url: body.thumbnail.url,
             publicId: body.thumbnail.publicId, // assuming you have this field in the request body
           },
+        },
+        images: body.images && {
+          create: body.images?.map((image: any) => ({
+            url: image.url,
+            publicId: image.publicId,
+          })),
         },
       },
     });
