@@ -165,6 +165,7 @@ const WriteBlog = ({
         }}
         isOpen={isImageUploadModalOpen}
         setIsOpen={setIsImageUploadModalOpen}
+        folder="blogs/images"
       />
     </>
   );

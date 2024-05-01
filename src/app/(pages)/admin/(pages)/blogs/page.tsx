@@ -10,6 +10,7 @@ import SomethingWentWrong from "../../_components/something-went-wrong";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import search from "@/utils/search";
+import { Blog } from "@/types/blog.types";
 
 /**
  * Show all blogs created by the user
@@ -18,7 +19,7 @@ const BlogsPage = () => {
   const [filteredData, setFilteredData] = useState<BlogCardProps[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   // Fetch all blogs
-  const { data, isLoading, isError } = useQuery<BlogCardProps[]>({
+  const { data, isLoading, isError } = useQuery<Blog[]>({
     queryKey: ["blogs"],
     queryFn: getBlogs,
     staleTime: Infinity,

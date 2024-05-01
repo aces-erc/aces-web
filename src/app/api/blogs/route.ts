@@ -1,7 +1,7 @@
 import { db } from "@/db/db";
 import { newBlogSchema } from "@/schema/blog.zod";
 import pick from "@/utils/pick";
-import { auth, currentUser, clerkClient } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
@@ -13,6 +13,9 @@ export const GET = async () => {
         slug: true,
         metaDescription: true,
         thumbnail: true,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
     return NextResponse.json(
@@ -54,7 +57,6 @@ export async function POST(req: Request) {
     //see if the body is valid
     try {
       body = newBlogSchema.parse(body);
-      console.log("After Parsing " + body);
     } catch (error) {
       return NextResponse.json(
         {

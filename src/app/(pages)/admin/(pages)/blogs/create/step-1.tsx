@@ -81,6 +81,7 @@ const StepOne = ({ setStep, setNewBlog, newBlog }: Props) => {
         action={(data) => {
           setThumbnail(data);
         }}
+        folder="blogs/thumbnails"
       />
       <form onSubmit={handleSubmit(onSubmit)} className="m-auto w-[600px]">
         <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8 shadow-md">

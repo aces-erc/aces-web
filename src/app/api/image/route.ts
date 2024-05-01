@@ -11,8 +11,9 @@ export const POST = async (req: NextRequest) => {
   try {
     const formData = await req.formData();
     const image = formData.get("image") as unknown as File;
+    const folder = formData.get("folder") as string;
 
-    const data: any = await UploadImage(image, "images");
+    const data: any = await UploadImage(image, folder ?? "images");
 
     return NextResponse.json(
       {
@@ -37,19 +38,19 @@ export const POST = async (req: NextRequest) => {
 };
 
 export const DELETE = async (req: NextRequest) => {
-try{
-  const { publicId } = await req.json();
-  const result = await DeleteImage(publicId);
-  return NextResponse.json(
-    {
-      data: result,
-      message: "Image deleted successfully",
-    },
-    {
-      status: 200,
-    }
-  );}
-  catch(error){
+  try {
+    const { publicId } = await req.json();
+    const result = await DeleteImage(publicId);
+    return NextResponse.json(
+      {
+        data: result,
+        message: "Image deleted successfully",
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
     return NextResponse.json(
       {
         status: 500,

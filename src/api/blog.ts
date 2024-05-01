@@ -1,7 +1,7 @@
 import { NewBlog } from "@/schema/blog.zod";
 import axios from "axios";
 import { API } from ".";
-import { BlogCardProps } from "@/app/(pages)/admin/_components/blog-card";
+import { Blog } from "@/types/blog.types";
 export const createBlog = async (newBlog: NewBlog) => {
   return new Promise((resolve, reject) => {
     axios
@@ -17,7 +17,7 @@ export const createBlog = async (newBlog: NewBlog) => {
   });
 };
 
-export const getBlogs = async (): Promise<BlogCardProps[]> => {
+export const getBlogs = async (): Promise<Blog[]> => {
   return new Promise((resolve, reject) => {
     axios
       .get(API.blogs, {

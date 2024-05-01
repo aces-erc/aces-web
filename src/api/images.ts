@@ -1,10 +1,11 @@
 import axios from "axios";
 import { API } from ".";
 
-export const uploadImage = (image: File) => {
+export const uploadImage = (image: File, folder: string) => {
   return new Promise((resolve, reject) => {
     const formData = new FormData();
     formData.append("image", image);
+    formData.append("folder", folder);
     axios
       .post(API.image, formData)
       .then((res) => {

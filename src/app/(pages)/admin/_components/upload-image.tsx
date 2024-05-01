@@ -21,13 +21,14 @@ type UploadImageProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   action: (data: { url: string; publicId?: string }) => void;
+  folder?: string;
 };
 const UploadImage = (props: UploadImageProps) => {
   const [file, setFile] = useState<File | null>(null);
   const [fileUrl, setFileUrl] = useState<string>("");
 
   const { mutate, isPending } = useMutation({
-    mutationFn: uploadImage,
+    mutationFn: (file: File) => uploadImage(file, props.folder ?? "images"),
     onSuccess: (data) => {
       props.action(
         data as {

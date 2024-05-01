@@ -14,9 +14,8 @@ export type BlogCardProps = {
 
 const BlogCard = (props: BlogCardProps) => {
   return (
-    <Card className="w-full max-w-md relative group">
+    <Card className="w-full relative group max-w-[370px]">
       {/* // edit delete buttons */}
-
       <div className="absolute top-4 right-4 z-10 flex flex-col gap-2 scale-0 group-hover:scale-100 transition-transform">
         <button className="bg-muted/40 p-1 rounded-full">
           <Pencil className="w-4 h-4" />
@@ -26,7 +25,7 @@ const BlogCard = (props: BlogCardProps) => {
         </button>
       </div>
 
-      <div className="aspect-[6.5/4] overflow-hidden rounded-t-lg">
+      <div className="aspect-[9/5] overflow-hidden rounded-t-lg">
         <img
           alt={props.title}
           className="h-full w-full object-cover object-center"
