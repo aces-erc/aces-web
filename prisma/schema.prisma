@@ -48,17 +48,17 @@ model Notices {
 }
 
 model CommitteeMembers {
-  id                       String                 @id @default(auto()) @map("_id") @db.ObjectId
-  name                     String
-  position                 String
-  contact                  String[]
-  CommitteeMembersAvatar   CommitteeMembersAvatar @relation(fields: [CommitteeMembersAvatarId], references: [id])
-  CommitteeMembersAvatarId String                 @unique @db.ObjectId
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  position String
+  contact  String[]
+  avatar   avatar   @relation(fields: [avatarId], references: [id])
+  avatarId String   @unique @db.ObjectId
 }
 
-model CommitteeMembersAvatar {
+model avatar {
   id               String            @id @default(auto()) @map("_id") @db.ObjectId
-  publicId         String
+  publicId         String?
   url              String
   CommitteeMembers CommitteeMembers?
 }

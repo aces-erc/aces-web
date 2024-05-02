@@ -46,7 +46,7 @@ export default function AdminLayout({
         <div className="flex flex-col">
           <Header />
           <div className="h-[calc(100vh-80px)] overflow-y-scroll overflow-x-hidden scrollbar-md">
-            <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+            <main className="flex flex-1 h-[calc(100vh-80px)] w-full flex-col gap-4 p-4 lg:gap-6 lg:p-6">
               {children}
             </main>
           </div>

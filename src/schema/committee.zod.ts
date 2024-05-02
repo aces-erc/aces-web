@@ -1,9 +1,4 @@
-import * as z from "zod";
-
-const CommitteeMembersAvatarSchema = z.object({
-  publicId: z.string().optional(),
-  url: z.string(),
-});
+import { z } from "zod";
 
 const CommitteeSchema = z.object({
   name: z.string().min(5, {
@@ -13,7 +8,12 @@ const CommitteeSchema = z.object({
     message: "Position must be at least 5 characters long",
   }),
   contact: z.array(z.string()),
-  CommitteeMembersAvatar: CommitteeMembersAvatarSchema,
+  avatar: z.object({
+    publicId: z.string().optional(),
+    url: z.string(),
+  }),
 });
 
-export { CommitteeSchema };
+export default CommitteeSchema;
+
+export type Committee = z.infer<typeof CommitteeSchema>;
