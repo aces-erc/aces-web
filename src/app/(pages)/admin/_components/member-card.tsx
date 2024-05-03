@@ -61,10 +61,7 @@ const MemberCard = ({ committee }: { committee: Committee }) => {
           >
             <Pencil className="w-3 h-3" />
           </Link>
-          <AlertDialog
-            open={isOpen}
-            onOpenChange={(isOpen) => setIsOpen(isOpen)}
-          >
+          <AlertDialog open={isOpen}>
             <AlertDialogTrigger
               className="bg-destructive/40 p-1 rounded-full"
               onClick={() => setIsOpen(true)}

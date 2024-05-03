@@ -153,8 +153,8 @@ const AddCommittee = () => {
                     if (e.key === "Enter") {
                       e.preventDefault();
                       const val = contactLink.trim();
-                      if (!val || !val.startsWith("http")) {
-                        toast.error("Enter a valid URL");
+                      if (!val) {
+                        toast.error("Enter a valid contact link");
                         return;
                       }
                       if (contact.includes(val)) {
@@ -171,7 +171,13 @@ const AddCommittee = () => {
                 {contact.map((contact, index) => (
                   <div key={index} className="flex gap-4 justify-between">
                     <Link
-                      href={contact}
+                      href={
+                        contact.startsWith("http")
+                          ? contact
+                          : contact.includes("@")
+                          ? `mailto:${contact}`
+                          : `tel:${contact}`
+                      }
                       target="_blank"
                       className="w-full text-xs max-w-[330px] truncate border border-muted px-3 underline py-2 rounded-lg"
                     >

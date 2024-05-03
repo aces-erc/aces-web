@@ -2,6 +2,7 @@ import { db } from "@/db/db";
 import { NextResponse } from "next/server";
 import CommitteeSchema from "@/schema/committee.zod";
 import { currentUser } from "@clerk/nextjs/server";
+import { DeleteImage } from "@/lib/delete-image";
 
 export const POST = async (req: Request) => {
   //check if the user is an admin
@@ -116,6 +117,18 @@ export const DELETE = async (req: Request) => {
         { status: 404 }
       );
     }
+
+    const avatarId = committeeMember.avatarId;
+    const avatar = await db.avatar.findUnique({
+      where: {
+        id: avatarId,
+      },
+    });
+
+    if (avatar?.publicId) {
+      DeleteImage(avatar.publicId);
+    }
+
     await db.committeeMembers.delete({
       where: {
         id: id,
@@ -126,8 +139,6 @@ export const DELETE = async (req: Request) => {
         id: committeeMember.avatarId,
       },
     });
-
-    //todo delete the image from cloudinary
 
     return NextResponse.json(
       {
