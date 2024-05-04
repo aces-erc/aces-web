@@ -2,8 +2,44 @@ import { db } from "@/db/db";
 import { NextResponse } from "next/server";
 import CommitteeSchema from "@/schema/committee.zod";
 import { currentUser } from "@clerk/nextjs/server";
-import { DeleteImage } from "@/lib/delete-image";
+import { deleteImageFromCloudinary } from "@/lib/delete-image";
 
+/**
+ * Retrieves the committee members from the database.
+ */
+export const GET = async () => {
+  try {
+    const committeeMembers = await db.committeeMembers.findMany({
+      include: {
+        avatar: true,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        status: 200,
+        message: "Committee members fetched successfully",
+        data: committeeMembers || [],
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        status: 500,
+        message: "Something Went Wrong!",
+        error: JSON.stringify(error),
+      },
+      { status: 500 }
+    );
+  }
+};
+
+/**
+ * Handles the POST request for creating a committee member.
+ * @param req - The request object.
+ * @returns A JSON response indicating the status and message.
+ */
 export const POST = async (req: Request) => {
   //check if the user is an admin
   try {
@@ -64,31 +100,11 @@ export const POST = async (req: Request) => {
   }
 };
 
-export const GET = async (req: Request) => {
-  const committeeMembers = await db.committeeMembers.findMany({
-    include: {
-      avatar: true,
-    },
-  });
-  if (committeeMembers === null || committeeMembers.length === 0) {
-    return NextResponse.json(
-      {
-        status: 404,
-        message: "No committee members found",
-      },
-      { status: 404 }
-    );
-  }
-  return NextResponse.json(
-    {
-      status: 200,
-      message: "Committee members fetched successfully",
-      data: committeeMembers,
-    },
-    { status: 200 }
-  );
-};
-
+/**
+ * Deletes a committee member.
+ * @param req - The request object.
+ * @returns A JSON response indicating the status of the deletion.
+ */
 export const DELETE = async (req: Request) => {
   try {
     const user = await currentUser();
@@ -125,8 +141,9 @@ export const DELETE = async (req: Request) => {
       },
     });
 
+    //delete the image from cloudinary
     if (avatar?.publicId) {
-      DeleteImage(avatar.publicId);
+      deleteImageFromCloudinary(avatar.publicId);
     }
 
     await db.committeeMembers.delete({

@@ -33,8 +33,8 @@ const MemberCard = ({ committee }: { committee: Committee }) => {
           setIsOpen(false);
         });
     },
-    onError: () => {
-      toast.error("Something went wrong");
+    onError: (err: string) => {
+      toast.error(err);
     },
   });
   return (
@@ -44,7 +44,7 @@ const MemberCard = ({ committee }: { committee: Committee }) => {
           <img
             src={committee.avatar.url}
             alt={committee.name}
-            className="w-16 h-16 rounded-full"
+            className="w-16 h-16 rounded-full object-cover origin-center bg-muted"
           />
           <div>
             <h2 className="text-lg font-medium">{committee.name}</h2>
@@ -54,12 +54,14 @@ const MemberCard = ({ committee }: { committee: Committee }) => {
           </div>
         </div>
         <div className="absolute top-2 right-2 z-10 flex flex-col gap-2 scale-0 group-hover:scale-100 transition-transform">
-          <Link
-            href={`/admin/committee/edit/${committee.id}`}
+          <button
+            onClick={() => {
+              toast.error("Edit feature is not available yet.");
+            }}
             className="bg-muted/40 p-1 rounded-full"
           >
             <Pencil className="w-3 h-3" />
-          </Link>
+          </button>
           <AlertDialog open={isOpen}>
             <AlertDialogTrigger
               className="bg-destructive/40 p-1 rounded-full"

@@ -99,7 +99,7 @@ const BlogCard = (props: Props) => {
       <div className="aspect-[9/5] overflow-hidden rounded-t-lg">
         <img
           alt={props.title}
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full object-cover object-center bg-muted"
           src={props.thumbnail.url}
         />
       </div>

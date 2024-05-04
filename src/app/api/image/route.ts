@@ -1,4 +1,4 @@
-import { DeleteImage } from "@/lib/delete-image";
+import { deleteImageFromCloudinary } from "@/lib/delete-image";
 import { UploadImage } from "@/lib/upload-image";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -37,10 +37,15 @@ export const POST = async (req: NextRequest) => {
   }
 };
 
+/**
+ * Deletes an image from Cloudinary.
+ * @param req - The NextRequest object containing the request data.
+ * @returns A NextResponse object with the result of the deletion operation.
+ */
 export const DELETE = async (req: NextRequest) => {
   try {
     const { publicId } = await req.json();
-    const result = await DeleteImage(publicId);
+    const result = await deleteImageFromCloudinary(publicId);
     return NextResponse.json(
       {
         data: result,
@@ -62,12 +67,3 @@ export const DELETE = async (req: NextRequest) => {
     );
   }
 };
-
-// Note :
-// while deleting the image you require the publicId of the image  for which either you can store public id in the database or you can extract the public id from the cloudinary api by using the image url.
-// `http://res.cloudinary.com/detlvdnwg/image/upload/v1714493345/images/hpvlc2kgrlyjodi155mm.jpg`
-// in this url the public id is `images/hpvlc2kgrlyjodi155mm` which is the part of the url after `upload/v` and before the `.jpg` extension.
-// you can extract the public id by using the following code.
-// const public_id = url.split('upload/v')[1].split('.jpg')[0]
-// so you can use both methods either store the public id in the database or extract the public id from the image url.
-// for more information you can visit cloudinary documentation.

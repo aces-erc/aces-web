@@ -2,17 +2,19 @@ import { Committee } from "@/schema/committee.zod";
 import axios from "axios";
 import { API } from ".";
 
-export const addCommitteeMember = async (newCommitteeMember: Committee) => {
+export const addCommitteeMember = async (
+  newCommitteeMember: Committee
+): Promise<string> => {
   return new Promise((resolve, reject) => {
     axios
       .post(API.committee, newCommitteeMember, {
         withCredentials: true,
       })
       .then((res) => {
-        resolve(res.data);
+        resolve(res.data?.message ?? "Committee member added successfully");
       })
       .catch((error) => {
-        reject(error);
+        reject(error?.response?.data?.message ?? "Something went wrong");
       });
   });
 };
@@ -27,7 +29,7 @@ export const getAllCommitteeMembers = async (): Promise<Committee[]> => {
         resolve(res.data?.data);
       })
       .catch((error) => {
-        reject(error);
+        reject(error?.response?.data?.message ?? "Something went wrong");
       });
   });
 };
@@ -42,7 +44,7 @@ export const getCommitteeMember = async (id: string): Promise<Committee> => {
         resolve(res.data?.data);
       })
       .catch((error) => {
-        reject(error);
+        reject(error?.response?.data?.message ?? "Something went wrong");
       });
   });
 };
@@ -58,7 +60,7 @@ export const deleteCommitteeMember = async (id: string) => {
         resolve(res.data);
       })
       .catch((error) => {
-        reject(error);
+        reject(error?.response?.data?.message ?? "Something went wrong");
       });
   });
 };

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const newBlogSchema = z.object({
+export const NewBlogSchema = z.object({
   title: z.string(),
   body: z.string(),
   metaDescription: z.string(),
@@ -23,4 +23,4 @@ export const newBlogSchema = z.object({
 });
 
 //types
-export type NewBlog = z.infer<typeof newBlogSchema>;
+export type NewBlog = z.infer<typeof NewBlogSchema>;

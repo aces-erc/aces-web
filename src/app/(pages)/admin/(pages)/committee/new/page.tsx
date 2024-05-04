@@ -6,7 +6,6 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -52,18 +51,18 @@ const AddCommittee = () => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: addCommitteeMember,
-    onSuccess: () => {
+    onSuccess: (msg) => {
       queryClient
         .invalidateQueries({
           queryKey: ["committee"],
         })
         .then(() => {
-          toast.success("Committee member added successfully");
+          toast.success(msg);
           router.push("/admin/committee");
         });
     },
-    onError: () => {
-      toast.error("Something went wrong");
+    onError: (err: string) => {
+      toast.error(err);
     },
   });
 

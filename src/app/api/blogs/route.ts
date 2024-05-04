@@ -1,5 +1,5 @@
 import { db } from "@/db/db";
-import { newBlogSchema } from "@/schema/blog.zod";
+import { NewBlogSchema } from "@/schema/blog.zod";
 import pick from "@/utils/pick";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
@@ -26,7 +26,7 @@ export const GET = async () => {
       {
         status: 200,
         message: "Blogs fetched successfully",
-        data: blogs,
+        data: blogs || [],
       },
       { status: 200 }
     );
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
     //see if the body is valid
     console.log(body);
     try {
-      body = newBlogSchema.parse(body);
+      body = NewBlogSchema.parse(body);
     } catch (error) {
       return NextResponse.json(
         {
@@ -133,6 +133,13 @@ export async function POST(req: Request) {
   }
 }
 
+/**
+ * Deletes a blog.
+ *
+ * @param req - The request object.
+ * @returns A JSON response indicating the status of the deletion.
+ * @throws If an error occurs during the deletion process.
+ */
 export async function DELETE(req: Request) {
   try {
     //check if the user is an admin
@@ -175,7 +182,6 @@ export async function DELETE(req: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       {
         status: 500,
