@@ -1,3 +1,6 @@
+/**
+ * This is the page where the user can create a new blog.
+ */
 "use client";
 import { useEffect, useState } from "react";
 import StepOne from "./step-1";
@@ -18,11 +21,9 @@ const CreateBlog = () => {
     thumbnail: { url: "" },
   });
 
-  useEffect(() => {
-    console.log(newBlog);
-  }, [newBlog]);
-
   const [step, setStep] = useState(1);
+
+  // Mutation to create a new blog
   const { isPending, mutate } = useMutation({
     mutationFn: createBlog,
     onSuccess: () => {
@@ -35,8 +36,8 @@ const CreateBlog = () => {
           router.push("/admin/blogs");
         });
     },
-    onError: () => {
-      toast.error("Something went wrong");
+    onError: (err: string) => {
+      toast.error(err);
     },
   });
 

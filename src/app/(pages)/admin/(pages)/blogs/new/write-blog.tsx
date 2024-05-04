@@ -28,8 +28,8 @@ const WriteBlog = ({
   setVal,
   setImages,
 }: Props) => {
+  // this is a hack to style the toolbar of the markdown editor
   useEffect(() => {
-    // this is a hack to style the toolbar of the markdown editor
     const addStyleToToolBar = () => {
       const toolbar = document.querySelector(
         ".w-md-editor>.w-md-editor-toolbar"

@@ -1,3 +1,6 @@
+/**
+ * This is the layout component for the admin pages. It checks if the user is signed in and if they are an admin. If they are not, it redirects them to the login page. If they are, it renders the admin layout.
+ */
 "use client";
 import { useInnerSize } from "@/hooks/use-inner-size";
 import NotSupported from "./_components/not-supported";

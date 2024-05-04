@@ -12,4 +12,6 @@ const CommitteeSchema = z.object({
 
 export default CommitteeSchema;
 
-export type Committee = z.infer<typeof CommitteeSchema>;
+export type Committee = z.infer<typeof CommitteeSchema> & {
+  id: string;
+};

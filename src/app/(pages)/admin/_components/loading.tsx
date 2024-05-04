@@ -1,3 +1,6 @@
+/**
+ * Reusable loading component
+ */
 import { MoonLoader } from "react-spinners";
 
 const Loading = () => {

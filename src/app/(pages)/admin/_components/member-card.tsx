@@ -55,7 +55,6 @@ const MemberCard = ({ committee }: { committee: Committee }) => {
         </div>
         <div className="absolute top-2 right-2 z-10 flex flex-col gap-2 scale-0 group-hover:scale-100 transition-transform">
           <Link
-            //@ts-ignore
             href={`/admin/committee/edit/${committee.id}`}
             className="bg-muted/40 p-1 rounded-full"
           >
@@ -73,7 +72,8 @@ const MemberCard = ({ committee }: { committee: Committee }) => {
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
                   This action cannot be undone. This will permanently delete{" "}
-                  {committee.name} from the committee.
+                  <span className="italic font-medium ">{committee.name}</span>{" "}
+                  from the committee.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -83,7 +83,6 @@ const MemberCard = ({ committee }: { committee: Committee }) => {
 
                 <AlertDialogAction
                   onClick={() => {
-                    //@ts-ignore
                     mutate(committee.id);
                   }}
                 >

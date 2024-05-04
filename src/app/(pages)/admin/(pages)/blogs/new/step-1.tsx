@@ -56,6 +56,7 @@ const StepOne = ({ setStep, setNewBlog, newBlog }: Props) => {
     setStep(2);
   };
 
+  // Set thumbnail value when thumbnail changes and clear errors
   useEffect(() => {
     setValue("thumbnail", thumbnail?.url || "");
     clearErrors("thumbnail");

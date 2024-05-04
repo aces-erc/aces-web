@@ -1,4 +1,4 @@
-export type Blog = {
+export type IBlog = {
   id: string;
   title: string;
   body: string;

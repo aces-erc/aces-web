@@ -15,10 +15,6 @@ import { useEffect } from "react";
 const Page = () => {
   const { user, isLoaded } = useUser();
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <div>
       <main className="flex min-h-[100dvh] flex-col items-center justify-center bg-gray-100 px-4 py-12 dark:bg-gray-900">

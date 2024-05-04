@@ -1,3 +1,6 @@
+/**
+ * Not Found page for the admin pages.
+ */
 export default function NotFound() {
   return (
     <div>

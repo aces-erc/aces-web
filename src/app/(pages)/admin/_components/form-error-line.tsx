@@ -1,3 +1,6 @@
+/**
+ * This is a reusable component that displays an error message in a form.
+ */
 import { cn } from "@/utils/cn";
 import React from "react";
 

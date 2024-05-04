@@ -1,3 +1,6 @@
+/**
+ * Layout for the entire application.
+ */
 import type { Metadata } from "next";
 import "../globals.css";
 import { ClerkProvider } from "@clerk/nextjs";

@@ -1,4 +1,6 @@
-// import Upload from "@/api/upload";
+/**
+ * This component is used to upload images to the server.
+ */
 import { uploadImage } from "@/api/images";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,13 +19,13 @@ import React, { useState } from "react";
 import { PulseLoader } from "react-spinners";
 import { toast } from "sonner";
 
-type UploadImageProps = {
+type Props = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   action: (data: { url: string; publicId?: string }) => void;
   folder?: string;
 };
-const UploadImage = (props: UploadImageProps) => {
+const UploadImage = (props: Props) => {
   const [file, setFile] = useState<File | null>(null);
   const [fileUrl, setFileUrl] = useState<string>("");
 
@@ -57,6 +59,7 @@ const UploadImage = (props: UploadImageProps) => {
             <label
               htmlFor="dropzone-file"
               className="flex flex-col items-center justify-center w-full h-48 border-2 border-muted-foreground border-dashed rounded-lg cursor-pointer bg-background hover:bg-muted-foreground/10 transition-colors"
+              // show the background image if the file is selected
               {...(fileUrl || file
                 ? {
                     style: {
@@ -136,6 +139,8 @@ const UploadImage = (props: UploadImageProps) => {
           <Button
             type="submit"
             onClick={() => {
+              // if file is selected then upload it
+              // if fileUrl is provided then return the url
               if (file) {
                 mutate(file);
               } else if (fileUrl) {
