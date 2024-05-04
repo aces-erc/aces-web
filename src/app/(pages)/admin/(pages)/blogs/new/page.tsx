@@ -9,7 +9,7 @@ import WriteBlog from "./write-blog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { createBlog } from "@/api/blog";
+import { createBlog } from "@/handlers/blog";
 
 const CreateBlog = () => {
   const router = useRouter();

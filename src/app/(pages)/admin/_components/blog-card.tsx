@@ -1,4 +1,4 @@
-import { deleteBlogById } from "@/api/blog";
+import { deleteBlogById } from "@/handlers/blog";
 import { Card } from "@/components/ui/card";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Pencil, Trash2 } from "lucide-react";

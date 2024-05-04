@@ -3,7 +3,7 @@
  */
 
 "use client";
-import { getBlogs } from "@/api/blog";
+import { getBlogs } from "@/handlers/blog";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { FilePlus } from "lucide-react";

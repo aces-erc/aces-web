@@ -7,7 +7,7 @@ import Loading from "../../_components/loading";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import search from "@/utils/search";
-import { getAllCommitteeMembers } from "@/api/committee";
+import { getAllCommitteeMembers } from "@/handlers/committee";
 import { Committee } from "@/schema/committee.zod";
 import MemberCard from "../../_components/member-card";
 import SomethingWentWrong from "../../_components/something-went-wrong";

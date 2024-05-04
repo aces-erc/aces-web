@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import UploadImage from "../../../_components/upload-image";
 import copyToClipboard from "@/utils/copy-to-clipboard";
 import { useMutation } from "@tanstack/react-query";
-import { deleteImage } from "@/api/images";
+import { deleteImage } from "@/handlers/images";
 import { toast } from "sonner";
 import { PulseLoader } from "react-spinners";
 import { NewBlog } from "@/schema/blog.zod";

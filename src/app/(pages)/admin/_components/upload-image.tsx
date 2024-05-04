@@ -1,7 +1,7 @@
 /**
  * This component is used to upload images to the server.
  */
-import { uploadImage } from "@/api/images";
+import { uploadImage } from "@/handlers/images";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

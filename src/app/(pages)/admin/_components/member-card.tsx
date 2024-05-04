@@ -13,7 +13,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteCommitteeMember } from "@/api/committee";
+import { deleteCommitteeMember } from "@/handlers/committee";
 import { toast } from "sonner";
 import { useState } from "react";
 import { PulseLoader } from "react-spinners";

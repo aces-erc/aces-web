@@ -18,7 +18,7 @@ import { Trash, Upload } from "lucide-react";
 import UploadImage from "../../../_components/upload-image";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addCommitteeMember } from "@/api/committee";
+import { addCommitteeMember } from "@/handlers/committee";
 import { useRouter } from "next/navigation";
 import { PulseLoader } from "react-spinners";
 
