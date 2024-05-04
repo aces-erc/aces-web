@@ -1,3 +1,6 @@
+/**
+ * API endpoints for the application.
+ */
 export const API = {
   blogs: "/api/blogs",
 

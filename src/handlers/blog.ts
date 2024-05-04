@@ -42,6 +42,11 @@ export const createBlog = async (newBlog: NewBlog) => {
   });
 };
 
+/**
+ * Deletes a blog by its ID.
+ * @param id - The ID of the blog to delete.
+ * @returns A Promise that resolves to a string indicating the result of the deletion.
+ */
 export const deleteBlogById = async (id: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     axios
