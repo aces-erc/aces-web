@@ -2,7 +2,6 @@ export type INotice = {
   id: string;
   title: string;
   body: string;
-  metaDescription: string;
   thumbnail: {
     url: string;
     publicId?: string;

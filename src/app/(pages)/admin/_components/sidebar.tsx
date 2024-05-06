@@ -26,7 +26,7 @@ const SIDEBAR_LINK = [
   {
     icon: Newspaper,
     label: "News/Notices",
-    href: "/admin/news",
+    href: "/admin/notices",
   },
   {
     icon: CalendarPlus2,
