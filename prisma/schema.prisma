@@ -36,17 +36,6 @@ model BlogImage {
   blogId   String? @db.ObjectId
 }
 
-model Notices {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  title          String
-  body           String
-  author         String
-  date           String
-  NoticeImageUrl String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-}
-
 model CommitteeMembers {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
   name     String
@@ -63,4 +52,30 @@ model avatar {
   CommitteeMembers CommitteeMembers?
 }
 
-// 
+model Notice {
+  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  slug        String          @unique
+  body        String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  authorId    String
+  thumbnail   NoticeThumbnail @relation(fields: [thumbnailId], references: [id])
+  thumbnailId String          @unique @db.ObjectId
+  images      NoticeImages[]
+}
+
+model NoticeThumbnail {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  publicId String?
+  url      String
+  Notice   Notice?
+}
+
+model NoticeImages {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  publicId String?
+  url      String
+  Notice   Notice? @relation(fields: [noticeId], references: [id])
+  noticeId String? @db.ObjectId
+}
