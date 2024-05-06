@@ -112,7 +112,7 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         status: 201,
-        message: "notice created successfully",
+        message: "Notice created successfully!",
         body: {
           ...pick(newNotice, ["id", "title", "slug"]), //return only the necessary fields
         },

@@ -22,4 +22,4 @@ export const NewNoticeSchema = z.object({
 });
 
 //types
-export type NewBlog = z.infer<typeof NewNoticeSchema>;
+export type NewNotice = z.infer<typeof NewNoticeSchema>;

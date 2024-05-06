@@ -1,10 +1,14 @@
 /**
  * API endpoints for the application.
  */
+const PREFIX = "/api";
+
 export const API = {
-  blogs: "/api/blogs",
+  blogs: PREFIX + "/blogs",
 
-  image: "/api/image",
+  notices: PREFIX + "/notices",
 
-  committee: "/api/committee",
+  image: PREFIX + "/image",
+
+  committee: PREFIX + "/committee",
 };
