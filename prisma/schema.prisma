@@ -79,3 +79,31 @@ model NoticeImages {
   Notice   Notice? @relation(fields: [noticeId], references: [id])
   noticeId String? @db.ObjectId
 }
+
+model Events {
+  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  slug        String          @unique
+  body        String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  authorId    String
+  thumbnail   EventsThumbnail @relation(fields: [thumbnailId], references: [id])
+  thumbnailId String          @unique @db.ObjectId
+  images      EventsImages[]
+}
+
+model EventsThumbnail {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  publicId String?
+  url      String
+  Events   Events?
+}
+
+model EventsImages {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  publicId String?
+  url      String
+  Events   Events? @relation(fields: [eventsId], references: [id])
+  eventsId String? @db.ObjectId
+}
