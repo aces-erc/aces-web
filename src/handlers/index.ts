@@ -11,4 +11,6 @@ export const API = {
   image: PREFIX + "/image",
 
   committee: PREFIX + "/committee",
+
+  events: PREFIX + "/events",
 };

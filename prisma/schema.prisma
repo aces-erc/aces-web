@@ -85,8 +85,8 @@ model Events {
   title       String
   slug        String          @unique
   body        String
-  startDate   DateTime
-  endDate     DateTime?
+  startDate   String
+  endDate     String?
   enrollLink  String?
   location    String?
   createdAt   DateTime        @default(now())

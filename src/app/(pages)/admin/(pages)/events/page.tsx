@@ -1,38 +1,38 @@
 /**
- * Show all notices created by the user
+ * Show all events created by the user
  */
 
 "use client";
+import { getBlogs } from "@/handlers/blog";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import { FilePlus, Siren } from "lucide-react";
+import { CalendarDays, FilePlus } from "lucide-react";
 import Link from "next/link";
+import BlogCard from "../../_components/blog-card";
 import Loading from "../../_components/loading";
 import SomethingWentWrong from "../../_components/something-went-wrong";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import search from "@/utils/search";
-import { getNotices } from "@/handlers/notice";
-import { INotice } from "@/types/notice.types";
-import NoticeCard from "../../_components/notice-card";
+import { getEvents } from "@/handlers/events";
+import { IEvent } from "@/types/event.types";
+import EventCard from "../../_components/event-card";
 
-const BlogsPage = () => {
-  const [filteredData, setFilteredData] = useState<INotice[]>([]);
+const EventsPage = () => {
+  const [filteredData, setFilteredData] = useState<IEvent[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  // Fetch all notices
-  const { data, isLoading, isError } = useQuery<INotice[]>({
-    queryKey: ["notices"],
-    queryFn: getNotices,
+  // Fetch all events
+  const { data, isLoading, isError } = useQuery<IEvent[]>({
+    queryKey: ["events"],
+    queryFn: getEvents,
     staleTime: Infinity,
   });
 
-  // Filter notices based on search query
+  // Filter events based on search query
   useEffect(() => {
     if (data) {
-      setFilteredData(
-        search<INotice>(data, searchQuery, ["title", "metaDescription"])
-      );
+      setFilteredData(search<IEvent>(data, searchQuery, ["title"]));
     }
   }, [data, searchQuery]);
 
@@ -46,30 +46,28 @@ const BlogsPage = () => {
         <Input
           onChange={(e) => setSearchQuery(e.target.value)}
           value={searchQuery}
-          placeholder="Search Blogs"
+          placeholder="Search events..."
           className="max-w-80"
         />
-        <Link href="/admin/notices/new">
+        <Link href="/admin/events/new">
           <Button>
-            <span>Add Notice</span>
-            <Siren className="h-5 w-5 ml-2" />
+            <span>Add Event</span>
+            <CalendarDays className="h-5 w-5 ml-2" />
           </Button>
         </Link>
       </div>
       <hr />
-      <h2 className="text-2xl font-semibold text-primary">All Notices</h2>
+      <h2 className="text-2xl font-semibold text-primary">All Events</h2>
       <div className="flex gap-4 flex-wrap">
         {filteredData && filteredData?.length > 0 ? (
-          filteredData?.map((notice) => (
-            <NoticeCard {...notice} key={notice.id} />
-          ))
+          filteredData?.map((event) => <EventCard {...event} key={event.id} />)
         ) : (
           <div className="flex flex-col items-center justify-center h-96 w-full">
-            <p className="text-muted-foreground">No notices found!</p>
+            <p className="text-muted-foreground">No events found!</p>
           </div>
         )}
       </div>
     </div>
   );
 };
-export default BlogsPage;
+export default EventsPage;
