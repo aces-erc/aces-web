@@ -46,7 +46,7 @@ const BlogsPage = () => {
         <Input
           onChange={(e) => setSearchQuery(e.target.value)}
           value={searchQuery}
-          placeholder="Search Blogs"
+          placeholder="Search Notices.."
           className="max-w-80"
         />
         <Link href="/admin/notices/new">
