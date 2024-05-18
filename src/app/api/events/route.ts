@@ -1,4 +1,5 @@
 import { db } from "@/db/db";
+import { deleteImageFromCloudinary } from "@/lib/delete-image";
 import { NewEventsSchema } from "@/schema/events.zod";
 import pick from "@/utils/pick";
 import { currentUser } from "@clerk/nextjs/server";
@@ -160,20 +161,59 @@ export const DELETE = async (req: Request) => {
       );
     }
 
-    // delete the notice
-    await db.events.delete({
+    const event = await db.events.findUnique({
       where: {
         id,
       },
     });
 
-    return NextResponse.json(
-      {
-        status: 200,
-        message: "Events deleted successfully",
-      },
-      { status: 200 }
-    );
+    if (event?.id) {
+      const thumbnail = await db.eventsThumbnail.findUnique({
+        where: {
+          id: event.thumbnailId,
+        },
+      });
+      const images = await db.eventsImages.findMany({
+        where: {
+          eventsId: event.id,
+        },
+      });
+      await db.events.delete({
+        where: {
+          id,
+        },
+      });
+      if (thumbnail) {
+        await db.eventsThumbnail.delete({
+          where: {
+            id: thumbnail.id,
+          },
+        });
+        if (thumbnail.publicId) {
+          await deleteImageFromCloudinary(thumbnail.publicId);
+        }
+      }
+      if (images) {
+        images.forEach(async (image) => {
+          await db.eventsImages.delete({
+            where: {
+              id: image.id,
+            },
+          });
+          if (image.publicId) {
+            await deleteImageFromCloudinary(image.publicId);
+          }
+        });
+      }
+
+      return NextResponse.json(
+        {
+          status: 200,
+          message: "Events deleted successfully",
+        },
+        { status: 200 }
+      );
+    }
   } catch (error) {
     return NextResponse.json(
       {
