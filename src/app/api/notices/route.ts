@@ -64,7 +64,7 @@ export async function POST(req: Request) {
     let body = await req.json();
 
     //see if the body is valid
-    console.log(body);
+
     try {
       body = NewNoticeSchema.parse(body);
     } catch (error) {
@@ -121,7 +121,6 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       {
         status: 500,
@@ -172,7 +171,6 @@ export async function DELETE(req: Request) {
         id,
       },
     });
-    console.log("🚀 ~ DELETE ~ notice:", notice);
 
     if (notice?.id) {
       const thumbnail = await db.noticeThumbnail.findUnique({
@@ -221,7 +219,6 @@ export async function DELETE(req: Request) {
       );
     }
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       {
         status: 500,

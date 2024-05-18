@@ -67,7 +67,6 @@ export const POST = async (req: Request) => {
         { status: 422 }
       );
     }
-    console.log(body);
     await db.committeeMembers.create({
       data: {
         ...body,

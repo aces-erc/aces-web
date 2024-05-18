@@ -1,4 +1,5 @@
 import { db } from "@/db/db";
+import { deleteImageFromCloudinary } from "@/lib/delete-image";
 import { NewBlogSchema } from "@/schema/blog.zod";
 import pick from "@/utils/pick";
 import { currentUser } from "@clerk/nextjs/server";
@@ -63,8 +64,6 @@ export async function POST(req: Request) {
 
     let body = await req.json();
 
-    //see if the body is valid
-    console.log(body);
     try {
       body = NewBlogSchema.parse(body);
     } catch (error) {
@@ -121,7 +120,6 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       {
         status: 500,
@@ -167,20 +165,59 @@ export async function DELETE(req: Request) {
       );
     }
 
-    // delete the blog
-    await db.blog.delete({
+    const blog = await db.blog.findUnique({
       where: {
         id,
       },
     });
 
-    return NextResponse.json(
-      {
-        status: 200,
-        message: "Blog deleted successfully",
-      },
-      { status: 200 }
-    );
+    if (blog?.id) {
+      const thumbnail = await db.thumbnail.findUnique({
+        where: {
+          id: blog.thumbnailId,
+        },
+      });
+      const images = await db.blogImage.findMany({
+        where: {
+          blogId: blog.id,
+        },
+      });
+      await db.blog.delete({
+        where: {
+          id,
+        },
+      });
+      if (thumbnail) {
+        await db.thumbnail.delete({
+          where: {
+            id: thumbnail.id,
+          },
+        });
+        if (thumbnail.publicId) {
+          await deleteImageFromCloudinary(thumbnail.publicId);
+        }
+      }
+      if (images) {
+        images.forEach(async (image) => {
+          await db.blogImage.delete({
+            where: {
+              id: image.id,
+            },
+          });
+          if (image.publicId) {
+            await deleteImageFromCloudinary(image.publicId);
+          }
+        });
+      }
+
+      return NextResponse.json(
+        {
+          status: 200,
+          message: "Blog deleted successfully",
+        },
+        { status: 200 }
+      );
+    }
   } catch (error) {
     return NextResponse.json(
       {
